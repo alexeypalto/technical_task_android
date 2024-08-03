@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_users">Mates list</string>
+
+    <string name="title_delete_dialog">Are you sure you want to delete this user from your mates?</string>
+    <string name="action_positive_delete_dialog">Yeah, delete him</string>
+    <string name="action_negative_delete_dialog">Nah, keep him</string>
+
+    <string name="title_create_user_dialog">Create User</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_gender">Gender</string>
+    <string name="hint_gender_male">Male</string>
+    <string name="hint_gender_female">Female</string>
+    <string name="hint_status">Status</string>
+    <string name="hint_status_active">Active</string>
+    <string name="hint_status_inactive">Inactive</string>
+    <string name="hint_creation_time">Creation time: %s</string>
+    <string name="action_create_user_dialog">Create</string>
+
+    <string name="error_common">Something went wrong</string>
+    <string name="format_two_string_with_comma" translatable="false">%1$s, %2$s</string>
+
+</resources>
