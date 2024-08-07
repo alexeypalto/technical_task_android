@@ -1,10 +1,11 @@
 package com.alexeyp.network.retrofit
 
+import com.alexeyp.common.result.HEADER_LIMIT
+import com.alexeyp.common.result.HEADER_PAGES
 import com.alexeyp.common.result.Result
 import com.alexeyp.network.NetworkDataSource
 import com.alexeyp.network.model.User
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.Interceptor
@@ -98,10 +99,6 @@ internal class RetrofitNetwork @Inject constructor(
         } catch (e: Exception) {
             Result.Failure.Error(Throwable(response.message()))
         }
-    }
-    companion object {
-        const val HEADER_PAGES = "X-Pagination-Pages"
-        const val HEADER_LIMIT = "X-Pagination-Limit"
     }
 }
 

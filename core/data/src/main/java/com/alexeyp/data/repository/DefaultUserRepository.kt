@@ -1,5 +1,6 @@
 package com.alexeyp.data.repository
 
+import com.alexeyp.common.result.DEFAULT_PAGE
 import com.alexeyp.network.NetworkDataSource
 import com.alexeyp.common.result.Result
 import com.alexeyp.network.model.User
@@ -11,7 +12,7 @@ internal class DefaultUserRepository @Inject constructor(private val dataSource:
     UserRepository {
 
     override suspend fun getUsersNumber(): Int {
-        return dataSource.getUsersNumber() ?: 1
+        return dataSource.getUsersNumber() ?: DEFAULT_PAGE
     }
 
     override suspend fun getUsers(page: Int, perPage: Int): Result<List<User>> {

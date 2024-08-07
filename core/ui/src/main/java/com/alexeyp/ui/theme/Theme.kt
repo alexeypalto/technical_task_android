@@ -20,14 +20,13 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorPalette = lightColorScheme(
     primary = Dark,
-    onPrimary = Blue,
+    onPrimary = White,
     secondary = DarkGrey,
-    onSecondary = DarkBlue,
+    onSecondary = White,
     background = White,
     surface = LightGrey,
-    onSurface = LightGrey,
+    onSurface = White,
     error = Red,
-    onError = Red
 )
 
     /* Other default colors to override

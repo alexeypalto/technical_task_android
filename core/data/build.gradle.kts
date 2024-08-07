@@ -5,7 +5,6 @@ plugins {
     id("kotlinx-serialization")
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-//    id("kotlin-kapt")
 }
 
 android {

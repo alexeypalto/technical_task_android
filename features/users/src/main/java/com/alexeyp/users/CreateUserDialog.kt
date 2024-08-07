@@ -14,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -45,9 +45,10 @@ fun CreateUserDialog(
     )
     val (selectedGenderOption, onOptionSelected) = remember { mutableStateOf(genderOptions[0]) }
     val checkedStatusState = remember { mutableStateOf(true) }
-    var statusState by remember { mutableStateOf(String()) }
     var currentNameInput by remember { mutableStateOf(TextFieldValue(String())) }
     var currentEmailInput by remember { mutableStateOf(TextFieldValue(String())) }
+
+    val context = LocalContext.current
 
     var isValid by remember { mutableStateOf(false) }
 
@@ -72,12 +73,22 @@ fun CreateUserDialog(
                     style = MaterialTheme.typography.labelSmall.merge(),
                 )
                 Spacer(modifier = Modifier.size(8.dp))
-                TextField(currentNameInput,
+                TextField(
+                    currentNameInput,
                     onValueChange = {
                         // check on change, if the value is valid
 //            isValid = onCheck(it.text)
                         currentNameInput = it
-                    })
+                    },
+                    colors = androidx.compose.material3.TextFieldDefaults.colors().copy(
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedTextColor = MaterialTheme.colorScheme.primary,
+                        unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.surface
+                    )
+                )
 
                 Spacer(Modifier.size(16.dp))
 
@@ -86,12 +97,22 @@ fun CreateUserDialog(
                     style = MaterialTheme.typography.labelSmall.merge(),
                 )
                 Spacer(modifier = Modifier.size(8.dp))
-                TextField(currentEmailInput,
+                TextField(
+                    value = currentEmailInput,
                     onValueChange = {
                         // check on change, if the value is valid
 //            isValid = onCheck(it.text)
                         currentEmailInput = it
-                    })
+                    },
+                    colors = androidx.compose.material3.TextFieldDefaults.colors().copy(
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedTextColor = MaterialTheme.colorScheme.primary,
+                        unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.surface
+                    )
+                )
 
                 Spacer(Modifier.size(16.dp))
 
@@ -153,8 +174,10 @@ fun CreateUserDialog(
                         id = null,
                         name = currentNameInput.text,
                         gender = selectedGenderOption.lowercase(),
-                        //hardcoded, but should be mapped from the boolean
-                        status = if (checkedStatusState.value) "active" else "inactive",
+                        status = if (checkedStatusState.value)
+                            context.getString(R.string.hint_status_active).lowercase()
+                        else
+                            context.getString(R.string.hint_status_inactive).lowercase(),
                         email = currentEmailInput.text
                     )
                     onUserCreated.invoke(user)

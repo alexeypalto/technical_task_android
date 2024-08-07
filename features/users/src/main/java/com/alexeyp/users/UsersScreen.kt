@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -33,6 +34,7 @@ import com.alexeyp.ui.compose.ErrorUI
 import com.alexeyp.ui.compose.HorizontalProgress
 import com.alexeyp.ui.compose.TitleToolbar
 import com.alexeyp.ui.compose.TitleToolbarState
+import com.alexeyp.users.utils.rememberForeverLazyListState
 
 @Composable
 internal fun UsersRoute(
@@ -131,7 +133,8 @@ fun UsersScreen(
             is UsersUiState.Success -> {
                 refreshing = false
                 LazyColumn(
-                    modifier.padding(horizontal = 16.dp),
+                    state = rememberForeverLazyListState("Users"),
+                    modifier = modifier.padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     (uiState as? UsersUiState.Success)?.users?.let { usersList ->

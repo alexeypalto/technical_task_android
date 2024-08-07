@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alexeyp.common.result.DEFAULT_PAGE
+import com.alexeyp.common.result.DEFAULT_PAGE_SIZE
 import com.alexeyp.common.result.asSuccess
 import com.alexeyp.domain.usecase.CreateUserUseCase
 import com.alexeyp.domain.usecase.DeleteUserUseCase
@@ -27,18 +29,18 @@ class UsersViewModel @Inject constructor(
 
     var shouldDisplayError by mutableStateOf(false to String())
 
-    private val _uiState = MutableStateFlow<UsersUiState>(UsersUiState.Loading)
+    val _uiState = MutableStateFlow<UsersUiState>(UsersUiState.Loading)
     val uiState: StateFlow<UsersUiState>
         get() = _uiState
 
-    private var PAGE = 1
-    private val SIZE = 20
+    private var PAGE = DEFAULT_PAGE
+    private val SIZE = DEFAULT_PAGE_SIZE
 
     fun refresh() {
         getUsers()
     }
 
-    private fun getUsers() {
+    fun getUsers() {
         viewModelScope.launch {
             _uiState.value = UsersUiState.Loading
             PAGE = getUsersNumberUseCase.invoke() / SIZE
