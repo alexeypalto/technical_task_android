@@ -76,16 +76,16 @@ class UsersViewModelTest {
         )
     }
 
-//    @ExperimentalCoroutinesApi
-//    @Test
-//    fun `test getUsers failure`() = runTest {
-//        coEvery { getUsersNumberUseCase.invoke() } returns 100
-//        coEvery { getUsersByPagesUseCase.invoke(any(), any()) } returns Result.Failure.Error(Throwable("Error"))
-//
-//        viewModel.getUsers()
-//
-//        assertTrue(viewModel.shouldDisplayError.first)
-//    }
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `test getUsers failure`() = runTest {
+        coEvery { getUsersNumberUseCase.invoke() } returns 100
+        coEvery { getUsersByPagesUseCase.invoke(1, 10) } returns Result.Failure.Error(Throwable("Error"))
+
+        viewModel.getUsers()
+
+        assertTrue(viewModel.shouldDisplayError.first)
+    }
 
     @ExperimentalCoroutinesApi
     @Test
@@ -98,15 +98,21 @@ class UsersViewModelTest {
         assertEquals(1, (viewModel.uiState.value as UsersUiState.Success).users.size)
     }
 
-//    @ExperimentalCoroutinesApi
-//    @Test
-//    fun `test createUser failure`() = runTest {
-//        coEvery { createUserUseCase.invoke(user) } returns Result.Failure.Error(Throwable("Error"))
-//
-//        viewModel.createUser(user)
-//
-//        assertTrue(viewModel.shouldDisplayError.first)
-//    }
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `test createUser failure`() = runTest {
+        coEvery { createUserUseCase.invoke(User(
+            id = 777L,
+            name = "",
+            email = "",
+            gender = "",
+            status = "",
+        )) } returns Result.Failure.Error(Throwable("Error"))
+
+        viewModel.createUser(user)
+
+        assertTrue(viewModel.shouldDisplayError.first)
+    }
 
     @ExperimentalCoroutinesApi
     @Test
@@ -121,19 +127,19 @@ class UsersViewModelTest {
         assertTrue((viewModel.uiState.value as UsersUiState.Success).users.isEmpty())
     }
 
-//    @ExperimentalCoroutinesApi
-//    @Test
-//    fun `test deleteUser failure`() = runTest {
-//        coEvery { deleteUserUseCase.invoke(user.id ?: -1L) } returns Result.Failure.Error(Throwable("Error"))
-//
-//        viewModel.deleteUser(user.id ?: -1L)
-//
-//        assertTrue(viewModel.shouldDisplayError.first)
-//    }
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `test deleteUser failure`() = runTest {
+        coEvery { deleteUserUseCase.invoke(777L) } returns Result.Failure.Error(Throwable("Error"))
+
+        viewModel.deleteUser(user.id ?: -1L)
+
+        assertTrue(viewModel.shouldDisplayError.first)
+    }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
+        Dispatchers.resetMain()
         clearAllMocks()
     }
 }
