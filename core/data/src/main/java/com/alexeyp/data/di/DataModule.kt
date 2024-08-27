@@ -2,8 +2,6 @@ package com.alexeyp.data.di
 
 import com.alexeyp.data.repository.DefaultUserRepository
 import com.alexeyp.data.repository.UserRepository
-import com.alexeyp.data.utils.ConnectivityManagerNetworkMonitor
-import com.alexeyp.data.utils.NetworkMonitor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,10 +14,4 @@ abstract class DataModule {
     internal abstract fun bindsUsersRepository(
         usersRepository: DefaultUserRepository
     ): UserRepository
-
-    @Binds
-    internal abstract fun bindsNetworkMonitor(
-        networkMonitor: ConnectivityManagerNetworkMonitor,
-    ): NetworkMonitor
-
 }

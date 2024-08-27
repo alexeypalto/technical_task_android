@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_error">Something went wrong…</string>
+    <string name="format_two_string_with_comma" translatable="false">%1$s, %2$s</string>
+</resources>

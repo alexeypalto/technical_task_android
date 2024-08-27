@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.alexeyp.data.utils.NetworkMonitor
+import com.alexeyp.network.utils.NetworkMonitor
 import com.alexeyp.slidetest.navigation.NavHost
 import kotlinx.coroutines.launch
 

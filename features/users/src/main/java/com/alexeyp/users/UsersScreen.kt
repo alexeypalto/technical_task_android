@@ -11,11 +11,10 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,6 +56,7 @@ fun UsersScreen(
     onShowSnackbar: (String) -> Unit,
     viewModel: UsersViewModel
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val shouldDisplayError = viewModel.shouldDisplayError
     var deleteUserDialogOpen by rememberSaveable { mutableStateOf<Pair<Boolean, Long?>>(false to null) }
@@ -72,7 +73,9 @@ fun UsersScreen(
     }
     LaunchedEffect(shouldDisplayError.first) {
         if (shouldDisplayError.first) {
-            onShowSnackbar(shouldDisplayError.second)
+            val error =
+                shouldDisplayError.second.ifEmpty { context.getString(com.alexeyp.ui.R.string.common_error) }
+            onShowSnackbar(error)
             viewModel.clearErrorState()
         }
     }
@@ -121,7 +124,7 @@ fun UsersScreen(
                 refreshing = false
                 ErrorUI(
                     message = (uiState as UsersUiState.Error).error
-                        ?: stringResource(id = R.string.error_common)
+                        ?: stringResource(id = com.alexeyp.ui.R.string.common_error)
                 )
             }
 
@@ -142,7 +145,7 @@ fun UsersScreen(
                             UserListItem(user = user) {
                                 deleteUserDialogOpen = true to user.id
                             }
-                            Divider(
+                            HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = 20.dp),
                                 color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
                             )

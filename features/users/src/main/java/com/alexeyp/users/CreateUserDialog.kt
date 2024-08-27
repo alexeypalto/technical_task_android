@@ -76,7 +76,7 @@ fun CreateUserDialog(
                 TextField(
                     currentNameInput,
                     onValueChange = {
-                        // check on change, if the value is valid
+                        //todo add check on change, if the value is valid
 //            isValid = onCheck(it.text)
                         currentNameInput = it
                     },
@@ -100,7 +100,7 @@ fun CreateUserDialog(
                 TextField(
                     value = currentEmailInput,
                     onValueChange = {
-                        // check on change, if the value is valid
+                        //todo add check on change, if the value is valid
 //            isValid = onCheck(it.text)
                         currentEmailInput = it
                     },

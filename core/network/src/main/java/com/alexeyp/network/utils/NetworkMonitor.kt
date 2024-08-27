@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alexeyp.data.utils
+package com.alexeyp.network.utils
 
 import kotlinx.coroutines.flow.Flow
 

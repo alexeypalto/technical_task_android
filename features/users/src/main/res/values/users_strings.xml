@@ -17,8 +17,4 @@
     <string name="hint_status_inactive">Inactive</string>
     <string name="hint_creation_time">Creation time: %s</string>
     <string name="action_create_user_dialog">Create</string>
-
-    <string name="error_common">Something went wrong</string>
-    <string name="format_two_string_with_comma" translatable="false">%1$s, %2$s</string>
-
 </resources>

@@ -1,4 +1,4 @@
-package com.alexeyp.data.utils
+package com.alexeyp.network.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

@@ -27,14 +27,14 @@ class UsersViewModel @Inject constructor(
     private val deleteUserUseCase: DeleteUserUseCase
 ) : ViewModel() {
 
-    var shouldDisplayError by mutableStateOf(false to String())
+    var shouldDisplayError by mutableStateOf(false to "")
 
     val _uiState = MutableStateFlow<UsersUiState>(UsersUiState.Loading)
     val uiState: StateFlow<UsersUiState>
         get() = _uiState
 
-    private var PAGE = DEFAULT_PAGE
-    private val SIZE = DEFAULT_PAGE_SIZE
+    private var page = DEFAULT_PAGE
+    private val pageSize = DEFAULT_PAGE_SIZE
 
     fun refresh() {
         getUsers()
@@ -43,17 +43,17 @@ class UsersViewModel @Inject constructor(
     fun getUsers() {
         viewModelScope.launch {
             _uiState.value = UsersUiState.Loading
-            PAGE = getUsersNumberUseCase.invoke() / SIZE
+            page = getUsersNumberUseCase.invoke() / pageSize
 
             runCatching {
-                getUsersByPagesUseCase.invoke(PAGE, SIZE)
+                getUsersByPagesUseCase.invoke(page, pageSize)
             }
                 .onSuccess { data ->
                     _uiState.value = UsersUiState.Success(users = data.asSuccess().value)
                 }
                 .onFailure { e ->
                     _uiState.value = UsersUiState.Error(e.message)
-                    shouldDisplayError = true to (e.message ?: "Users could not be loaded")
+                    shouldDisplayError = true to (e.message ?: "")
                 }
         }
     }
@@ -70,7 +70,7 @@ class UsersViewModel @Inject constructor(
                     _uiState.value = UsersUiState.Success(users = newList)
                 }
                 .onFailure {
-                    shouldDisplayError = true to (it.message ?: "User could not be added")
+                    shouldDisplayError = true to (it.message ?: "")
                 }
         }
     }
@@ -87,7 +87,7 @@ class UsersViewModel @Inject constructor(
                     _uiState.value = UsersUiState.Success(users = newList)
                 }
                 .onFailure {
-                    shouldDisplayError = true to (it.message ?: "User could not be removed")
+                    shouldDisplayError = true to (it.message ?: "")
                 }
         }
     }
